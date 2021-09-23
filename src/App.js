@@ -1,25 +1,30 @@
-import logo from './logo.svg';
-import './App.css';
+import React, { useEffect } from 'react';
+import { Route } from 'react-router-dom';
+import { useDispatch, useSelector } from 'react-redux';
+
+import { fetchPizzas } from './redux/actions/pizzas';
+
+import { Header } from './components';
+import { Home, Cart } from './pages';
+
 
 function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+	const dispatch = useDispatch();
+	const { category, sortBy } = useSelector(({ filters }) => filters);
+
+	useEffect(() => {
+		dispatch(fetchPizzas(category, sortBy));
+	}, [dispatch, category, sortBy]);
+
+	return (
+		<div className="wrapper">
+			<Header />
+			<div className="content">
+				<Route exact path="/" component={Home} />
+				<Route exact path="/cart" component={Cart} />
+			</div>
+		</div>
+	);
 }
 
 export default App;
