@@ -6,7 +6,7 @@ export const setLoaded = (payload) => ({
 export const fetchPizzas = (category, sortBy) => (dispatch) => {
 	dispatch(setLoaded(false));
 
-	fetch(`http://localhost:3001/pizzas?
+	fetch(`https://z-react-pizza.herokuapp.com/api?
 		${category != null ? `category=${category}` : ''}
 		&_sort=${sortBy}
 		&_order=${sortBy === 'name' ? 'asc' : 'desc'}
